@@ -114,7 +114,7 @@ public class RedBackTry4Spec extends LinearOpMode {
 
 
         Action park = drive.actionBuilder(drive.pose)
-                .strafeToLinearHeading(new Vector2d(47,-56),Math.toRadians(90), baseVelConstraint, baseAccelConstraint)
+                .strafeToLinearHeading(new Vector2d(47,-56),Math.toRadians(90), new TranslationalVelConstraint(90), baseAccelConstraint)
                 .build();
 
 
