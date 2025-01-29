@@ -69,7 +69,7 @@ public class RedBackTry4Spec extends LinearOpMode {
                 .strafeToConstantHeading(new Vector2d(0,-31.5), baseVelConstraint, baseAccelConstraint)
                 .build();
 
-        Action moveToBlock = drive.actionBuilder(drive.pose)
+        Action moveToBlock = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToLinearHeading(new Vector2d(34,-47),Math.toRadians(360), baseVelConstraint, baseAccelConstraint)
 
                 //Be above the block
@@ -77,43 +77,43 @@ public class RedBackTry4Spec extends LinearOpMode {
                 .strafeToConstantHeading(new Vector2d(48,-5), baseVelConstraint, baseAccelConstraint)
                 .build();
 
-        Action push2Blocks = drive.actionBuilder(drive.pose)
+        Action push2Blocks = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToConstantHeading(new Vector2d(48,-5), baseVelConstraint, baseAccelConstraint)
                 .strafeToConstantHeading(new Vector2d(58.5,-5), baseVelConstraint, baseAccelConstraint)
                 .strafeToConstantHeading(new Vector2d(58.5,-57), baseVelConstraint, baseAccelConstraint)
                 .build();
 
-        Action moveToPickup1 = drive.actionBuilder(drive.pose)
+        Action moveToPickup1 = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToConstantHeading(new Vector2d(58.5, -52), baseVelConstraint, baseAccelConstraint)
                 .strafeToConstantHeading(new Vector2d(31.3,-58.2), baseVelConstraint, baseAccelConstraint)
                 .build();
 
 
-        Action moveToSub2 = drive.actionBuilder(drive.pose)
+        Action moveToSub2 = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToLinearHeading(new Vector2d(4, -30.6),Math.toRadians(180), baseVelConstraint, baseAccelConstraint)
                 .build();
 
-        Action moveToPickup2 = drive.actionBuilder(drive.pose)
+        Action moveToPickup2 = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToLinearHeading(new Vector2d(31.6, -54),Math.toRadians(360), baseVelConstraint, baseAccelConstraint)
                 .strafeTo(new Vector2d(31.6,-57.6), baseVelConstraint, baseAccelConstraint)
                 .build();
 
-        Action moveToSub3 = drive.actionBuilder(drive.pose)
+        Action moveToSub3 = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToLinearHeading(new Vector2d(6, -30.6),Math.toRadians(180), baseVelConstraint, baseAccelConstraint)
                 .build();
 
 
-        Action moveToPickup3 = drive.actionBuilder(drive.pose)
+        Action moveToPickup3 = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToLinearHeading(new Vector2d(31.6, -54),Math.toRadians(360), baseVelConstraint, baseAccelConstraint)
                 .strafeTo(new Vector2d(31.6,-57.6), baseVelConstraint, baseAccelConstraint)
                 .build();
 
-        Action moveToSub4 = drive.actionBuilder(drive.pose)
+        Action moveToSub4 = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToLinearHeading(new Vector2d(8, -30.6),Math.toRadians(180), baseVelConstraint, baseAccelConstraint)
                 .build();
 
 
-        Action park = drive.actionBuilder(drive.pose)
+        Action park = drive.actionBuilder(drive.localizer.getPose())
                 .strafeToLinearHeading(new Vector2d(47,-56),Math.toRadians(90), new TranslationalVelConstraint(90), baseAccelConstraint)
                 .build();
 

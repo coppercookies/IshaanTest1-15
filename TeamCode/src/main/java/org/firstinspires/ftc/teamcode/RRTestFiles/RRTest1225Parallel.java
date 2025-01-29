@@ -30,7 +30,7 @@ public class RRTest1225Parallel extends LinearOpMode {
 
         DcMotor arm = hardwareMap.get(DcMotor.class,  "motor");
 
-        Action Traj1 = drive.actionBuilder(drive.pose)
+        Action Traj1 = drive.actionBuilder(drive.localizer.getPose())
                 .lineToX(10)
                 .build();
 
