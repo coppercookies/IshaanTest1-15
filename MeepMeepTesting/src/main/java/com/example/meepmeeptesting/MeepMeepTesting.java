@@ -2,6 +2,7 @@ package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.AccelConstraint;
 import com.acmerobotics.roadrunner.AngularVelConstraint;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
@@ -17,11 +18,12 @@ public class MeepMeepTesting {
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(mm)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(65, 65, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(14, -61.5, Math.toRadians(180)))
                 //drop specimen 1
+                        .waitSeconds(4)
                 .strafeToConstantHeading(new Vector2d(10,-31.5))
                 .waitSeconds(1)
 
@@ -29,13 +31,14 @@ public class MeepMeepTesting {
 
 
 
-
 //                //Go to block 1
                 .splineToLinearHeading(new Pose2d(27,-40,Math.toRadians(90)),Math.toRadians(360))
                 .splineToLinearHeading(new Pose2d(46,-5,Math.toRadians(90)),Math.toRadians(360))
                 .strafeToLinearHeading(new Vector2d(46,-57),Math.toRadians(90))
+                                .waitSeconds(0.01)
 
                 //Go to block 2
+
                 .splineToConstantHeading(new Vector2d(46, -5), Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(58, -5), Math.toRadians(-90))
                 .splineToConstantHeading(new Vector2d(58, -57), Math.toRadians(270.00))
@@ -44,10 +47,9 @@ public class MeepMeepTesting {
 
 
                 //pick up specimen 1
-                .strafeToConstantHeading(new Vector2d(58.5, -52))
-                .strafeToLinearHeading(new Vector2d(58.5,-52.01),Math.toRadians(360), new AngularVelConstraint(Math.PI))
+                .strafeToLinearHeading(new Vector2d(45,-45),Math.toRadians(360))
                 .strafeToConstantHeading(new Vector2d(31.3,-58.2))
-                .waitSeconds(1)
+                .waitSeconds(0.7)
 
 
                 //drop specimen 2 and come back

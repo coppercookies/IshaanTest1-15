@@ -64,43 +64,46 @@ public class RedBack4SpecTryBackwardPush extends LinearOpMode {
         );
 
         Action moveToSub1 = drive.actionBuilder(beginPose)
-                .strafeToConstantHeading(new Vector2d(15,-31.5), baseMoveToSub, baseAccelConstraint)
+                .strafeToConstantHeading(new Vector2d(10,-31.5))
                 .build();
 
-        Action moveToBlock = drive.actionBuilder(new Pose2d(15,-31.5,Math.toRadians(180)))
-                .strafeToLinearHeading(new Vector2d(34,-42),Math.toRadians(360), baseVelConstraint, baseAccelConstraint)
-
-                //Be above the block
-                .strafeToConstantHeading(new Vector2d(36,-5), baseVelConstraint, baseAccelConstraint)
-                .strafeToConstantHeading(new Vector2d(46,-5), baseVelConstraint, baseAccelConstraint)
+        Action moveToAndPushBlock1 = drive.actionBuilder(new Pose2d(10,-31.5,Math.toRadians(180)))
+                //get away from sub
+                .strafeToConstantHeading(new Vector2d(10,-33))
+                //move in front of first block
+                .splineToLinearHeading(new Pose2d(36,-30,Math.toRadians(90)),Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(36, -5), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(48.2, -5), Math.toRadians(270))
+                //move back to observation zone
+                .splineToConstantHeading(new Vector2d(48.2, -51), Math.toRadians(90))
                 .build();
 
-        Action push2Blocks = drive.actionBuilder(new Pose2d(46,-5,Math.toRadians(360)))
-                .strafeToConstantHeading(new Vector2d(46,-52), new TranslationalVelConstraint(90), baseAccelConstraint)
-                .strafeToConstantHeading(new Vector2d(46,-5) , new TranslationalVelConstraint(90), baseAccelConstraint)
-
-
-                .strafeToConstantHeading(new Vector2d(55,-5),baseVelConstraint, baseAccelConstraint)
-                .strafeToConstantHeading(new Vector2d(55,-52), new TranslationalVelConstraint(90), baseAccelConstraint)
+        Action moveToAndPushBlock2 = drive.actionBuilder(new Pose2d(48.2,-51,Math.toRadians(90)))
+                //move in front of second block
+                .splineToConstantHeading(new Vector2d(48.2, -5), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(58, -5), Math.toRadians(-90))
+                //move back to observation zone
+                .splineToConstantHeading(new Vector2d(58, -57), Math.toRadians(270.00))
                 .build();
 
-        Action moveToPickup1 = drive.actionBuilder(new Pose2d(55,-52,Math.toRadians(360)))
-                .strafeToConstantHeading(new Vector2d(55, -48), null, baseAccelConstraint)
-                .strafeToConstantHeading(new Vector2d(27.5,-59.2), null, baseAccelConstraint)
+        Action moveToPickup1 = drive.actionBuilder(new Pose2d(58,-57,Math.toRadians(90)))
+                //move away from pushed block and go towards first specimen
+                .strafeToLinearHeading(new Vector2d(45,-45),Math.toRadians(360))
+                .strafeToConstantHeading(new Vector2d(31.3,-58.2))
                 .build();
 
-        Action moveToSub2 = drive.actionBuilder(new Pose2d(27.5,-59.2,Math.toRadians(360)))
-                .strafeToLinearHeading(new Vector2d(10, -28),Math.toRadians(180),new TranslationalVelConstraint(90), baseAccelConstraint)
-                .build(); //9
+        Action moveToSub2 = drive.actionBuilder(new Pose2d(31.3,-58.2,Math.toRadians(360)))
+                .strafeToLinearHeading(new Vector2d(10, -28),Math.toRadians(180))
+                .build();
 
         Action moveToPickup2 = drive.actionBuilder(new Pose2d(10, -28, Math.toRadians(180)))
-                .strafeToLinearHeading(new Vector2d(26.5, -50),Math.toRadians(360), baseMoveToSub, baseAccelConstraint)
-                .strafeTo(new Vector2d(26.5,-58.8), new TranslationalVelConstraint(8))
+                .strafeToLinearHeading(new Vector2d(26.5, -50),Math.toRadians(360))
+                .strafeTo(new Vector2d(26.5,-58.8))
                 .build();
 
         Action moveToSub3 = drive.actionBuilder(new Pose2d(26.5, -58.8, Math.toRadians(360)))
-                .strafeToLinearHeading(new Vector2d(5, -28),Math.toRadians(180),baseMoveToSub, baseAccelConstraint)
-                .build();//6
+                .strafeToLinearHeading(new Vector2d(5, -28),Math.toRadians(180))
+                .build();
 
 
         Action moveToPickup3 = drive.actionBuilder(new Pose2d(5,-28, Math.toRadians(180)))
@@ -137,12 +140,12 @@ public class RedBack4SpecTryBackwardPush extends LinearOpMode {
                         ),
 
                         new ParallelAction(
-                                moveToBlock,
-                                new ClawSliderAction(clawSlider,1395,0.8)
+                                moveToAndPushBlock1,
+                                new ClawSliderAction(clawSlider,1395,0.6)
                         ),
 
                         new SequentialAction(
-                                push2Blocks,
+                                moveToAndPushBlock2,
                                 moveToPickup1,
                                 new PatientClawAction(claw,0.7)
                         ),
