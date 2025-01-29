@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.OtherTest;
 
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -8,6 +11,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +22,10 @@ public class FCDOpModeTeleOp extends OpMode {
     Deadline gamepadRateLimit = new Deadline(250, TimeUnit.MILLISECONDS);
     DcMotor leftFront, rightFront, rightBack, leftBack;
     IMU imu;
+
+    Pose2d beginPose = new Pose2d(0, 0, 0);
+    MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
+
     @Override
     public void init() {
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
@@ -40,6 +48,7 @@ public class FCDOpModeTeleOp extends OpMode {
     @Override
     public void loop() {
         FSDDrive();
+        goToPoint();
     }
 
     private void FSDDrive() {
@@ -47,7 +56,7 @@ public class FCDOpModeTeleOp extends OpMode {
         double strafe = gamepad1.left_stick_x;
         double turn = -gamepad1.right_stick_x;
 
-        //max power oover here is 0.95
+        //max power over here is 0.95
         double drivePower = 0.95 - (0.6 * gamepad1.right_trigger);
 
         if (gamepadRateLimit.hasExpired() && gamepad1.a) {
@@ -74,4 +83,24 @@ public class FCDOpModeTeleOp extends OpMode {
         leftFront.setPower(LFPower);
         leftBack.setPower(LBPower);
     }
+    private void goToPoint() {
+        if (gamepad1.a) {
+            Actions.runBlocking(
+                    drive.actionBuilder(beginPose)
+                            .turnTo(Math.toRadians(360))
+                            .build()
+            );
+
+        }
+        if (gamepad1.x) {
+            Actions.runBlocking(
+                    drive.actionBuilder(beginPose)
+                            .endTrajectory()
+                            .build()
+            );
+
+        }
+
+    }
+
 }
