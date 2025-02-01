@@ -14,7 +14,7 @@ public class MeepMeepTesting2 {
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(65, 65, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
         //Code goes in here
@@ -29,9 +29,8 @@ public class MeepMeepTesting2 {
 
 //                //Go to block 1
 
-                       // .splineToConstantHeading(new Vector2d(36, -31.5), Math.toRadians(90))
 
-                        .splineToLinearHeading(new Pose2d(36,-30,Math.toRadians(90)),Math.toRadians(90))
+                        .splineToLinearHeading(new Pose2d(36,-15,Math.toRadians(360)),Math.toRadians(90))
                         .splineToConstantHeading(new Vector2d(36, -5), Math.toRadians(90))
 
                 //strafe in front of block 1
