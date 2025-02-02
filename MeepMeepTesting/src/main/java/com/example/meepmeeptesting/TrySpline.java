@@ -29,20 +29,21 @@ public class TrySpline {
 
                 //Go to block 1
                         .splineTo(new Vector2d(36.5, -24), Math.toRadians(90))//35
-                        .splineToConstantHeading(new Vector2d(37, -5), Math.toRadians(90))
+                        .splineTo(new Vector2d(37, -5), Math.toRadians(90))
+                //push block
                         .splineToConstantHeading(new Vector2d(48.2, -5), Math.toRadians(270))
+                        .splineToConstantHeading(new Vector2d(48.2, -51), Math.toRadians(90))
 
 
 
                         //////////////////////////////////
-//                        .splineToConstantHeading(new Vector2d(48.2, -51), Math.toRadians(90))
-//                        .waitSeconds(0.01)
+                        .waitSeconds(0.01)
 //
 //                        //Go to block 2
 //
-//                        .splineToConstantHeading(new Vector2d(48.2, -5), Math.toRadians(90))
-//                        .splineToConstantHeading(new Vector2d(58, -5), Math.toRadians(-90))
-//                        .splineToConstantHeading(new Vector2d(58, -57), Math.toRadians(270.00))
+                        .strafeTo(new Vector2d(48.2, -5))
+                        .splineToConstantHeading(new Vector2d(58, -5), Math.toRadians(-90))
+                        .splineToConstantHeading(new Vector2d(58, -57), Math.toRadians(270.00))
 //
 //                        //get away from 2nd pushed block and change heading
 //
