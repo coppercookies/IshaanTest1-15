@@ -8,13 +8,14 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
+
 public class TrySpline {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(750);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(70, 70, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
         //Code goes in here
