@@ -19,15 +19,19 @@ public class tryRRTeleOp extends OpMode {
 
     @Override
     public void init() {
-        Pose2d startPose = new Pose2d(9, -61.5, Math.toRadians(180));
-        drive = new MecanumDrive(hardwareMap, startPose);
-        drive.localizer.setPose(startPose);
+        //Fix beginPose
+        Pose2d beginPose = new Pose2d(9, -61.5, Math.toRadians(90));
+        drive = new MecanumDrive(hardwareMap, beginPose);
+        drive.localizer.setPose(beginPose);
 
     }
 
     @Override
     public void loop() {
+        RRDrive();
+    }
 
+    private void RRDrive() {
         Pose2d pose = drive.localizer.getPose();
         double heading = pose.heading.toDouble(); // Get the robot's heading in radians
 
@@ -46,7 +50,6 @@ public class tryRRTeleOp extends OpMode {
                 //turn
                 -gamepad2.right_stick_x
         ));
-
         drive.updatePoseEstimate();
 
 
