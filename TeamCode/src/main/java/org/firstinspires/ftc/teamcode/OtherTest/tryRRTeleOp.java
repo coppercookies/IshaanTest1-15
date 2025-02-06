@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode.OtherTest;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @TeleOp(name = "FieldCentricTeleOp", group = "TeleOp")
@@ -27,23 +28,32 @@ public class tryRRTeleOp extends OpMode {
     @Override
     public void loop() {
 
+        Pose2d pose = drive.localizer.getPose();
+        double heading = pose.heading.toDouble(); // Get the robot's heading in radians
+
+        double vertical = -gamepad2.left_stick_y;
+        double strafe = -gamepad2.left_stick_x;
+
+        double adjustedVertical = vertical * Math.sin(heading) + strafe * Math.cos(heading);
+        double adjustedStrafe = vertical * Math.cos(heading) - strafe * Math.sin(heading);
+
+//        double adjustedVertical = vertical * Math.cos(heading) - strafe * Math.sin(heading);
+//        double adjustedStrafe = vertical * Math.sin(heading) + strafe * Math.cos(heading);
+        Vector2d positionInput = new Vector2d(adjustedStrafe, adjustedVertical);
+
         drive.setDrivePowers(new PoseVelocity2d(
-                new Vector2d(
-                        -gamepad2.left_stick_y,
-                        -gamepad2.left_stick_x
-                ),
+                positionInput,
+                //turn
                 -gamepad2.right_stick_x
         ));
 
         drive.updatePoseEstimate();
 
-        Pose2d pose = drive.localizer.getPose();
 
         if (gamepad2.b) {
             Actions.runBlocking(
                     drive.actionBuilder(pose)
-                            .splineTo(new Vector2d(30, 30), Math.PI / 2)
-                            .splineTo(new Vector2d(0, 60), Math.PI)
+                            .strafeToLinearHeading(new Vector2d(40,-30),Math.toRadians(360))
                             .build());
         } else if (gamepad2.x) {
             Actions.runBlocking(
@@ -55,7 +65,14 @@ public class tryRRTeleOp extends OpMode {
 
         telemetry.addData("x", pose.position.x);
         telemetry.addData("y", pose.position.y);
-        telemetry.addData("heading (deg)", Math.toDegrees(pose.heading.toDouble()));
+        telemetry.addData("heading (deg)", Math.toDegrees(heading));
         telemetry.update();
+
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.fieldOverlay().setStroke("#3F51B5");
+        Drawing.drawRobot(packet.fieldOverlay(), pose);
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+
+
     }
 }
